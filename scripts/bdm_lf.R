@@ -1,3 +1,4 @@
+
 library(tidyverse)
 
 bdm_lf <- read_csv("data/bdm_length_frequency.csv") 
@@ -41,22 +42,25 @@ bdm_whit %>%
 #filter(bdm_lf, species == "Actinopyga echinites") 
 #group_by(year)
 
-bdm_density <- read_csv("data/bdm_density_average_sea cucumber_only.csv")
+bdm_density <- read_csv("data/bdm_density_average_sea cucumber_only_edit.csv")
 
 bdm_whitmaei <- bdm_density %>% 
   select('holothuria_whitmaei', 'zone', 'samocc', 'strata')
 
-whitmaei_reeftop <- filter(bdm_whitmaei, strata == "Reef top") %>% 
-  group_by(zone)
+whitmaei_reeftop <- filter(bdm_whitmaei, strata == "Reef top") 
+group_by(zone)
 
-whit_fourzone <- subset(whitmaei_reeftop, zone == "Don Cay")
+whit_fourzone <- filter(whitmaei_reeftop, zone == "Don Cay"| zone == "Cumberland" | zone == "Barrier" | zone == "Darnley" | zone == "Seven Reefs" | zone == "Great North East Channel") 
 
-ggplot(whitmaei_reeftop, aes(x= zone, colour = zone)) +
+arrange(whit_fourzone, desc(samocc))
+
+ggplot(whit_fourzone, aes(x= samocc, colour = samocc)) +
   geom_density() +
-  facet_wrap(~ samocc)
+  facet_wrap(~ zone)
 
-whitmaei_reeftop %>% 
-  ggplot(aes(zone)) +
+whit_fourzone %>% 
+  ggplot(aes(samocc)) +
   geom_density()
   
-
+#level_order <- c("RR195", "ETS02", "ETS05","ETS09", "ETS19")  
+#fct_relevel(samocc,"RR195", "ETS02", "ETS05","ETS09", "ETS19"))
