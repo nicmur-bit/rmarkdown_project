@@ -88,6 +88,7 @@ whit_fourzone %>%
   geom_point() +
   geom_line() +
   scale_x_continuous(breaks = c(1995, 2002, 2005, 2009, 2019))
+#this is just for reef top buff, produce one for other two strata and put on average/mean trend line
 
 #include an average/summarise of data
   
@@ -119,5 +120,5 @@ ggplot(whit_no_deep, aes(y= holothuria_whitmaei, x = samocc, colour = zone)) +
   scale_x_continuous(breaks = c(1995, 2002, 2005, 2009, 2019)) +
   theme(axis.text.x=element_text(angle=45,hjust=1)) 
 
-
+#need to put on an average trend line for strata and zone
 
