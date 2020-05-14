@@ -66,7 +66,6 @@ ggplot(whit_fourzone, aes(y= holothuria_whitmaei, x = samocc, colour = zone)) +
 ggplot(whit_fourzone, aes(y= holothuria_whitmaei, x = zone, colour = samocc)) +
   geom_line() 
   
-
 # i don't need density, can't use for this data
 
 whit_fourzone %>% 
@@ -88,6 +87,7 @@ whit_fourzone %>%
   geom_point() +
   geom_line() +
   scale_x_continuous(breaks = c(1995, 2002, 2005, 2009, 2019))
+
 #this is just for reef top buff, produce one for other two strata and put on average/mean trend line
 
 #include an average/summarise of data
@@ -96,9 +96,16 @@ whit_fourzone %>%
 #arrange(whit_fourzone, desc(samocc))
 #level_order <- c("RR195", "ETS02", "ETS05","ETS09", "ETS19")  
 #fct_relevel(samocc,"RR195", "ETS02", "ETS05","ETS09", "ETS19"))
+#ggplot(whit_no_deep, aes(y= holothuria_whitmaei, x = samocc, colour = zone)) +
+#geom_point() +
+#geom_line() +
+#facet_wrap(~ strata) +
+#scale_x_continuous(breaks = c(1995, 2002, 2005, 2009, 2019)) +
+#theme(axis.text.x=element_text(angle=45,hjust=1)) 
 
 #include all strata and use colour to separate them
 
+#holothuria_whitmaei
 bdm_whitmaei <- bdm_density %>% 
   select('holothuria_whitmaei', 'zone', 'samocc', 'strata')
 
@@ -113,12 +120,121 @@ ggplot(whit_no_deep, aes(y= holothuria_whitmaei, x = samocc, colour = strata)) +
   scale_x_continuous(breaks = c(1995, 2002, 2005, 2009, 2019)) +
   theme(axis.text.x=element_text(angle=90,hjust=1)) 
 
-ggplot(whit_no_deep, aes(y= holothuria_whitmaei, x = samocc, colour = zone)) +
+#stichopus_herrmanni
+
+bdm_herrmanni <- bdm_density %>% 
+  select('stichopus_herrmanni', 'zone', 'samocc', 'strata')
+
+herm_all_strata <- filter(bdm_herrmanni, zone == "Barrier" | zone == "Great North East Channel" | zone == "Don Cay"| zone == "Cumberland" | zone == "Darnley" | zone == "Seven Reefs") 
+
+herm_no_deep <- filter(herm_all_strata, strata == "Reef top buffer (200 m)" | strata == "Reef top" | strata == "Reef edge")
+
+ggplot(herm_no_deep, aes(y= stichopus_herrmanni, x = samocc, colour = strata)) +
   geom_point() +
   geom_line() +
-  facet_wrap(~ strata) +
+  facet_wrap(~ zone) +
   scale_x_continuous(breaks = c(1995, 2002, 2005, 2009, 2019)) +
-  theme(axis.text.x=element_text(angle=45,hjust=1)) 
+  theme(axis.text.x=element_text(angle=90,hjust=1)) 
+
+#holothuria_ananas
+
+bdm_ananas <- bdm_density %>% 
+  select('holothuria_ananas', 'zone', 'samocc', 'strata')
+
+ananas_all_strata <- filter(bdm_ananas, zone == "Barrier" | zone == "Great North East Channel" | zone == "Don Cay"| zone == "Cumberland" | zone == "Darnley" | zone == "Seven Reefs") 
+
+ananas_no_deep <- filter(ananas_all_strata, strata == "Reef top buffer (200 m)" | strata == "Reef top" | strata == "Reef edge")
+
+ggplot(ananas_no_deep, aes(y= holothuria_ananas, x = samocc, colour = strata)) +
+  geom_point() +
+  geom_line() +
+  facet_wrap(~ zone) +
+  scale_x_continuous(breaks = c(1995, 2002, 2005, 2009, 2019)) +
+  theme(axis.text.x=element_text(angle=90,hjust=1)) 
+
+#holothuria_fuscogilva
+
+bdm_fusco <- bdm_density %>% 
+  select('holothuria_fuscogilva', 'zone', 'samocc', 'strata')
+
+fusco_all_strata <- filter(bdm_fusco, zone == "Barrier" | zone == "Great North East Channel" | zone == "Don Cay"| zone == "Cumberland" | zone == "Darnley" | zone == "Seven Reefs") 
+
+fusco_no_deep <- filter(fusco_all_strata, strata == "Reef top buffer (200 m)" | strata == "Reef top" | strata == "Reef edge")
+
+ggplot(fusco_no_deep, aes(y= holothuria_fuscogilva, x = samocc, colour = strata)) +
+  geom_point()+
+  geom_line() +
+  facet_wrap(~ zone) +
+  scale_x_continuous(breaks = c(1995, 2002, 2005, 2009, 2019)) +
+  theme(axis.text.x=element_text(angle=90,hjust=1)) 
 
 #need to put on an average trend line for strata and zone
+
+
+plot_fusco <- ggplot(fusco_no_deep, aes(y= holothuria_fuscogilva, x = samocc, colour = strata)) +
+  geom_point() +
+  geom_line() +
+  facet_wrap(~ zone) +
+  labs(y= "Holothuria fuscopunctata", x = "Survey year", colour = "Strata") +
+  geom_smooth(se = FALSE, colour = "black") +
+  scale_x_continuous(breaks = c(1995, 2002, 2005, 2009, 2019)) +
+  theme(axis.text.x=element_text(angle=90,hjust=1),
+        axis.title.y = element_text(face = "italic"),
+        strip.text = element_text(face = "bold"),
+        legend.key=element_blank())
+  
+plot_whit <- ggplot(whit_no_deep, aes(y= holothuria_whitmaei, x = samocc, colour = strata)) +
+  geom_point() +
+  geom_line() +
+  facet_wrap(~ zone) +
+  labs(y= "Holothuria whitamaei", x = "Survey year", colour = "Strata") +
+  geom_smooth(se = FALSE, colour = "black") +
+  scale_x_continuous(breaks = c(1995, 2002, 2005, 2009, 2019)) +
+  theme(axis.text.x=element_text(angle=90,hjust=1),
+        axis.title.y = element_text(face = "italic"),
+        strip.text = element_text(face = "bold"),
+        legend.key=element_blank())
+
+plot_herm <- ggplot(herm_no_deep, aes(y= stichopus_herrmanni, x = samocc, colour = strata)) +
+  geom_point() +
+  geom_line() +
+  facet_wrap(~ zone) +
+  labs(y= "Stichopus herrmannii", x = "Survey year", colour = "Strata") +
+  geom_smooth(se = FALSE, colour = "black") +
+  scale_x_continuous(breaks = c(1995, 2002, 2005, 2009, 2019)) +
+  theme(axis.text.x=element_text(angle=90, hjust=1),
+        axis.title.y = element_text(face = "italic"),
+        strip.text = element_text(face = "bold"),
+        legend.key=element_blank())
+
+plot_anan <- ggplot(ananas_no_deep, aes(y= holothuria_ananas, x = samocc, colour = strata)) +
+  geom_point() +
+  geom_line () +
+  facet_wrap(~ zone) +
+  labs(y= "Thelenota ananas", x = "Survey year", colour = "Strata") +
+  geom_smooth(se = FALSE, colour = "black") +
+  scale_x_continuous(breaks = c(1995, 2002, 2005, 2009, 2019)) +
+  theme(axis.text.x=element_text(angle=90,hjust=1),
+        axis.title.y = element_text(face = "italic"),
+        strip.text = element_text(face = "bold"),
+        legend.key=element_blank())
+
+#stat_smooth(method = 'lm', formula = y ~ x, se = FALSE) +
+
+install.packages("cowplot")
+library(cowplot)
+
+all_plot_bdm <- plot_grid(plot_fusco, plot_whit, plot_herm, plot_anan) +
+  
+  
+#theme(plot_fusco, (legend.position = 'hidden'), 
+        #plot_whit, (legend.position = 'hidden'), 
+        #plot_herm, (legend.position = 'hidden'), 
+        #plot_anan, (legend.postion = 'right'))
+
+
+
+
+
+
 
