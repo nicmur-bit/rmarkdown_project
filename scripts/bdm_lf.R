@@ -113,10 +113,12 @@ whit_all_strata <- filter(bdm_whitmaei, zone == "Barrier" | zone == "Great North
 
 whit_no_deep <- filter(whit_all_strata, strata == "Reef top buffer (200 m)" | strata == "Reef top" | strata == "Reef edge")
 
+zone_names <- as_labeller(c("Barrier" = "Barrier", "Cumberland" = "Cumberland", "Darnley" = "Darnely", "Don Cay" = "Don Cay", "Great North East Channel" = "Great NE Channel", "Seven Reefs" = "Seven Reefs"))
+
 ggplot(whit_no_deep, aes(y= holothuria_whitmaei, x = samocc, colour = strata)) +
   geom_point() +
   geom_line() +
-  facet_wrap(~ zone) +
+  facet_wrap(~ zone, labeller = zone_names) +
   scale_x_continuous(breaks = c(1995, 2002, 2005, 2009, 2019)) +
   theme(axis.text.x=element_text(angle=90,hjust=1)) 
 
@@ -129,10 +131,12 @@ herm_all_strata <- filter(bdm_herrmanni, zone == "Barrier" | zone == "Great Nort
 
 herm_no_deep <- filter(herm_all_strata, strata == "Reef top buffer (200 m)" | strata == "Reef top" | strata == "Reef edge")
 
+zone_names <- as_labeller(c("Barrier" = "Barrier", "Cumberland" = "Cumberland", "Darnley" = "Darnely", "Don Cay" = "Don Cay", "Great North East Channel" = "Great NE Channel", "Seven Reefs" = "Seven Reefs"))
+
 ggplot(herm_no_deep, aes(y= stichopus_herrmanni, x = samocc, colour = strata)) +
   geom_point() +
   geom_line() +
-  facet_wrap(~ zone) +
+  facet_wrap(~ zone, labeller = zone_names) +
   scale_x_continuous(breaks = c(1995, 2002, 2005, 2009, 2019)) +
   theme(axis.text.x=element_text(angle=90,hjust=1)) 
 
@@ -145,10 +149,12 @@ ananas_all_strata <- filter(bdm_ananas, zone == "Barrier" | zone == "Great North
 
 ananas_no_deep <- filter(ananas_all_strata, strata == "Reef top buffer (200 m)" | strata == "Reef top" | strata == "Reef edge")
 
+zone_names <- as_labeller(c("Barrier" = "Barrier", "Cumberland" = "Cumberland", "Darnley" = "Darnely", "Don Cay" = "Don Cay", "Great North East Channel" = "Great NE Channel", "Seven Reefs" = "Seven Reefs"))
+
 ggplot(ananas_no_deep, aes(y= holothuria_ananas, x = samocc, colour = strata)) +
   geom_point() +
   geom_line() +
-  facet_wrap(~ zone) +
+  facet_wrap(~ zone, labeller = zone_names) +
   scale_x_continuous(breaks = c(1995, 2002, 2005, 2009, 2019)) +
   theme(axis.text.x=element_text(angle=90,hjust=1)) 
 
@@ -159,79 +165,104 @@ bdm_fusco <- bdm_density %>%
 
 fusco_all_strata <- filter(bdm_fusco, zone == "Barrier" | zone == "Great North East Channel" | zone == "Don Cay"| zone == "Cumberland" | zone == "Darnley" | zone == "Seven Reefs") 
 
-fusco_no_deep <- filter(fusco_all_strata, strata == "Reef top buffer (200 m)" | strata == "Reef top" | strata == "Reef edge")
+fusco_no_deep <- filter(fusco_all_strata, strata == "Reef top buffer (200 m)" | strata == "Reef top" | strata == "Reef edge") 
 
-ggplot(fusco_no_deep, aes(y= holothuria_fuscogilva, x = samocc, colour = strata)) +
-  geom_point()+
+zone_names <- as_labeller(c("Barrier" = "Barrier", "Cumberland" = "Cumberland", "Darnley" = "Darnely", "Don Cay" = "Don Cay", "Great North East Channel" = "Great NE Channel", "Seven Reefs" = "Seven Reefs"))
+
+  ggplot(fusco_no_deep, aes(y= holothuria_fuscogilva, x = samocc, colour = strata)) +
+  geom_point() +
   geom_line() +
-  facet_wrap(~ zone) +
+  facet_wrap(~ zone, labeller = zone_names) +
   scale_x_continuous(breaks = c(1995, 2002, 2005, 2009, 2019)) +
   theme(axis.text.x=element_text(angle=90,hjust=1)) 
 
 #need to put on an average trend line for strata and zone
 
 
-plot_fusco <- ggplot(fusco_no_deep, aes(y= holothuria_fuscogilva, x = samocc, colour = strata)) +
-  geom_point() +
-  geom_line() +
-  facet_wrap(~ zone) +
-  labs(y= "Holothuria fuscopunctata", x = "Survey year", colour = "Strata") +
-  geom_smooth(se = FALSE, colour = "black") +
-  scale_x_continuous(breaks = c(1995, 2002, 2005, 2009, 2019)) +
-  theme(axis.text.x=element_text(angle=90,hjust=1),
-        axis.title.y = element_text(face = "italic"),
-        strip.text = element_text(face = "bold"),
-        legend.key=element_blank())
+  plot_fuscog <- ggplot(fusco_no_deep, aes(y= holothuria_fuscogilva, x = samocc, colour = strata)) +
+    geom_point() +
+    geom_line() +
+    facet_wrap(~ zone, labeller = zone_names) +
+    labs(y= "Holothuria fuscogilva", x = "Survey year", colour = "Strata:") +
+    geom_smooth(se = FALSE, colour = "black") +
+    scale_x_continuous(breaks = c(1995, 2002, 2005, 2009, 2019)) +
+    theme(axis.text.x=element_blank(),
+          axis.title.y = element_text(face = "italic"),
+          axis.title.x = element_blank(),
+          strip.text = element_text(face = "bold"),
+          legend.key=element_blank())
+    
+  plot_whit <- ggplot(whit_no_deep, aes(y= holothuria_whitmaei, x = samocc, colour = strata)) +
+    geom_point() +
+    geom_line() +
+    facet_wrap(~ zone, labeller = zone_names) +
+    labs(y= "Holothuria whitamaei", x = "Survey year", colour = "Strata:") +
+    geom_smooth(se = FALSE, colour = "black") +
+    scale_x_continuous(breaks = c(1995, 2002, 2005, 2009, 2019)) +
+    theme(axis.text.x=element_blank(),
+          axis.title.y = element_text(face = "italic"),
+          axis.title.x = element_blank(),
+          strip.text = element_text(face = "bold"),
+          legend.key=element_blank())
   
-plot_whit <- ggplot(whit_no_deep, aes(y= holothuria_whitmaei, x = samocc, colour = strata)) +
-  geom_point() +
-  geom_line() +
-  facet_wrap(~ zone) +
-  labs(y= "Holothuria whitamaei", x = "Survey year", colour = "Strata") +
-  geom_smooth(se = FALSE, colour = "black") +
-  scale_x_continuous(breaks = c(1995, 2002, 2005, 2009, 2019)) +
-  theme(axis.text.x=element_text(angle=90,hjust=1),
-        axis.title.y = element_text(face = "italic"),
-        strip.text = element_text(face = "bold"),
-        legend.key=element_blank())
+  plot_herm <- ggplot(herm_no_deep, aes(y= stichopus_herrmanni, x = samocc, colour = strata)) +
+    geom_point() +
+    geom_line() +
+    facet_wrap(~ zone, labeller = zone_names) +
+    labs(y= "Stichopus herrmannii", x = "Survey year", colour = "Strata:") +
+    geom_smooth(se = FALSE, colour = "black") +
+    scale_x_continuous(breaks = c(1995, 2002, 2005, 2009, 2019)) +
+    theme(axis.text.x=element_text(angle=50, hjust=1),
+          axis.title.y = element_text(face = "italic"),
+          strip.text = element_text(face = "bold"),
+          legend.key=element_blank())
+  
+  plot_anan <- ggplot(ananas_no_deep, aes(y= holothuria_ananas, x = samocc, colour = strata)) +
+    geom_point() +
+    geom_line () +
+    facet_wrap(~ zone, labeller = zone_names) +
+    labs(y= "Thelenota ananas", x = "Survey year", colour = "Strata:") +
+    geom_smooth(se = FALSE, colour = "black") +
+    scale_x_continuous(breaks = c(1995, 2002, 2005, 2009, 2019)) +
+    theme(axis.text.x=element_text(angle=50,hjust=1),
+          axis.title.y = element_text(face = "italic"),
+          strip.text = element_text(face = "bold"),
+          legend.key=element_blank())
+  
+  #stat_smooth(method = 'lm', formula = y ~ x, se = FALSE) +
 
-plot_herm <- ggplot(herm_no_deep, aes(y= stichopus_herrmanni, x = samocc, colour = strata)) +
-  geom_point() +
-  geom_line() +
-  facet_wrap(~ zone) +
-  labs(y= "Stichopus herrmannii", x = "Survey year", colour = "Strata") +
-  geom_smooth(se = FALSE, colour = "black") +
-  scale_x_continuous(breaks = c(1995, 2002, 2005, 2009, 2019)) +
-  theme(axis.text.x=element_text(angle=90, hjust=1),
-        axis.title.y = element_text(face = "italic"),
-        strip.text = element_text(face = "bold"),
-        legend.key=element_blank())
+library(ggplot2)
+library("ggpubr")
+  
+figure <- ggarrange(plot_fuscog, plot_whit, plot_herm, plot_anan,
+          labels = c("A" , "B", "C", "D", element_text(size = 8)),
+          ncol = 2, nrow = 2,
+          common.legend = TRUE, legend = "bottom") +
+          labs(title = "Mean percent of sea cucumber species in Torres Strait zones, within habitat strata across survey years") +
+          theme(plot.title = element_text(size = 15, face = "bold",
+                margin = margin(10, 0, 10, 0)),
+                axis.title.x = element_text(vjust = -0.35),
+                axis.title.y = element_text(vjust = 0.35),
+                plot.background=element_rect(fill="lightblue"),
+                plot.margin = unit(c(1, 1, 1, 1), "cm")) #top, right, bottom, left
 
-plot_anan <- ggplot(ananas_no_deep, aes(y= holothuria_ananas, x = samocc, colour = strata)) +
-  geom_point() +
-  geom_line () +
-  facet_wrap(~ zone) +
-  labs(y= "Thelenota ananas", x = "Survey year", colour = "Strata") +
-  geom_smooth(se = FALSE, colour = "black") +
-  scale_x_continuous(breaks = c(1995, 2002, 2005, 2009, 2019)) +
-  theme(axis.text.x=element_text(angle=90,hjust=1),
-        axis.title.y = element_text(face = "italic"),
-        strip.text = element_text(face = "bold"),
-        legend.key=element_blank())
 
-#stat_smooth(method = 'lm', formula = y ~ x, se = FALSE) +
 
-install.packages("cowplot")
+ggexport(figure, filename = "figure1.pdf")        
+
+
+
+#ggexport
+
 library(cowplot)
 
-all_plot_bdm <- plot_grid(plot_fusco, plot_whit, plot_herm, plot_anan) +
-  
-  
+all_plot_bdm <- plot_grid(plot_fuscog, plot_whit, plot_herm, plot_anan) 
+    
+    
 #theme(plot_fusco, (legend.position = 'hidden'), 
         #plot_whit, (legend.position = 'hidden'), 
         #plot_herm, (legend.position = 'hidden'), 
         #plot_anan, (legend.postion = 'right'))
-
 
 
 
