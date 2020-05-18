@@ -191,7 +191,7 @@ zone_names <- as_labeller(c("Barrier" = "Barrier", "Cumberland" = "Cumberland", 
           axis.title.x = element_blank(),
           strip.text = element_text(face = "bold"),
           legend.key=element_blank())
-    
+  
   plot_whit <- ggplot(whit_no_deep, aes(y= holothuria_whitmaei, x = samocc, colour = strata)) +
     geom_point() +
     geom_line() +
@@ -238,7 +238,7 @@ figure <- ggarrange(plot_fuscog, plot_whit, plot_herm, plot_anan,
           labels = c("A" , "B", "C", "D", element_text(size = 8)),
           ncol = 2, nrow = 2,
           common.legend = TRUE, legend = "bottom") +
-          labs(title = "Mean percent of sea cucumber species in Torres Strait zones, within habitat strata across survey years") +
+          labs(title = "Average density of sea cucumber species in Torres Strait zones\nwithin habitat strata, across survey years") +
           theme(plot.title = element_text(size = 15, face = "bold",
                 margin = margin(10, 0, 10, 0)),
                 axis.title.x = element_text(vjust = -0.35),
@@ -246,7 +246,7 @@ figure <- ggarrange(plot_fuscog, plot_whit, plot_herm, plot_anan,
                 plot.background=element_rect(fill="lightblue"),
                 plot.margin = unit(c(1, 1, 1, 1), "cm")) #top, right, bottom, left
 
-
+ggsave("plots/figure.png", height = 20, width = 25, units="cm", dpi=200)
 
 ggexport(figure, filename = "figure1.pdf")        
 
@@ -258,7 +258,8 @@ library(cowplot)
 
 all_plot_bdm <- plot_grid(plot_fuscog, plot_whit, plot_herm, plot_anan) 
     
-    
+ggsave("plots/all_plot_bdm.png", height = 15, width = 20, units="cm", dpi=200)    
+
 #theme(plot_fusco, (legend.position = 'hidden'), 
         #plot_whit, (legend.position = 'hidden'), 
         #plot_herm, (legend.position = 'hidden'), 
