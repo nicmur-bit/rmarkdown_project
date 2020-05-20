@@ -27,7 +27,40 @@ bdm_whit %>%
   ggplot(aes(x = length, group = year, fill = year)) +
   geom_histogram(aes(y = stat(count) / sum(count) * 100), 
                  bins = 45, position = "dodge") 
-  
+##
+bdm_lf <- read_csv("data/bdm_length_frequency.csv") 
+
+bdm_whit <- bdm_lf %>% 
+  filter(species == "Holothuria whitmaei")
+
+bdm_whit %>% 
+  ggplot(aes(x = length)) +
+  geom_histogram(binwidth = 10)+
+  facet_wrap(~year)+
+  labs(y= "Count", x = "Total length (mm)")
+
+bdm_whit$year <- as.character(bdm_whit$year)
+
+bdm_whit %>% 
+  ggplot(aes(x = length, group = year, fill = year)) +
+  geom_histogram(aes(y = stat(count) / sum(count) * 100), 
+                 bins = 45, position = "dodge", binwidth = 10) +
+  labs(x= "Total length (mm)", y= "Percentage frequency", fill = "Survey year")
+
+
+
+
+
+
+##
+
+bdm_density <- read_csv("data/bdm_density_average_sea cucumber_edit.csv")
+
+bdm_rmark <- bdm_density %>% 
+  select('holothuria_whitmaei', 'zone', 'samocc', 'strata', 'count_site_id', 'area_hectare')
+
+
+
 #guides(fill = guide_legend(byrow = "TRUE"))
 #guides(colour = guide_colorbar(order = 1),
 #alpha = guide_legend(order = 2))
@@ -266,7 +299,7 @@ ggsave("plots/all_plot_bdm.png", height = 15, width = 20, units="cm", dpi=200)
         #plot_anan, (legend.postion = 'right'))
 
 
-
+#<div style= "float:right;position: relative; top: -50px;">
 
 
 
