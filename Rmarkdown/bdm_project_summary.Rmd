@@ -1,0 +1,238 @@
+---
+title: Sustainable livelihoods in Torres Strait
+subtitle: The importance of sea cucumber fishing
+short_title: Beche-de-mer stock survey 2019/20
+
+author:  Nicole Murphy
+affiliation: Oceans and Atmosphere # Or group/team
+photo: resources/img/NM_profile.jpg
+
+output: DSreport::project_summary
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  results = 'asis',
+  echo = FALSE,
+  warning = FALSE,
+  message = FALSE,
+  fig.align = 'center'
+)
+
+#Load libraries
+library(tidyverse)
+library(gapminder)
+library(kableExtra)
+library("ggpubr")
+
+```
+# Introduction
+
+Most of my work is in Torres Strait in collaboration with Traditional Owners, with a focus on stock assessment and harvest strategies for their hand collectable fisheries. I have spent a lot of time underwater collecting data and am now more involved on the other "dark" side, with analyses and data outputs. I *never* used code before data school. 
+
+# My Project
+
+The Torres Strait 'Beche-de-mer (sea cucumber) Fishery (TSBDM) has become an important source of income for Torres Strait islanders since the early 1990s. While most beche-de-mer species stocks are in good numbers, several species are closed to fishing, or recovering from fishing pressure such as Sandfish, Black teatfish and Surf redfish. This has led to increased fishing pressure on other species, including the Prickly redfish and Curryfish. 
+
+Fishery dependent data (logbooks) were introduced to the TSBDMF in December 2017. However, there is considerable uncertainty about the status of many beche-de-mer populations. A stock survey is at present, still the only way to find out the status of fished beche-de-mer populations in Torres Strait. Previous stock surveys have been undertaken in 1995, 2002, 2005 and 2009. The most recent survey was undertaken in 2019/20.
+
+*Thank you to Torres Strait Islander fishery representatives, and to all Torres Strait Islanders for regularly hosting us on their land and supporting this research.*
+
+## My goals
+
+Data exists for the TSBDMF from field surveys undertaken in 1995, 2002, 2005, 2009 and now 2019/20. Previously excel has been used for anlayses for stratitfied mean comparisons and stock estimates of species abundance. My goal is to work up the 2019/20 data set and build on previous analyses using R for fishery statistics of CPUE, as well as modelling to look at stock trends. 
+
+**Stock survey**
+
+SCUBA divers surveyed transects for sea cucumbers species in November 2019 and January 2020. Sea cucumbers were recorded and processed, along with a number of environmental indicators and habitat measurement (Table\@ref(tab:mytable)).
+
+```{r mytable, out.width='50%', echo = F}
+
+bdm_density <- read_csv("data/bdm_density_average_sea cucumber_edit.csv")
+
+bdm_rmark <- bdm_density %>% 
+  select('holothuria_whitmaei', 'zone', 'samocc', 'strata', 'count_site_id', 'area_hectare', 'longitude', 'latitude', 'depth_finish')
+
+knitr::kable(head(bdm_rmark, n = 5), format = "html", caption = "Field data") %>% 
+  kable_styling("striped", "condensed", full_width = F, position = "left", font_size = 8)
+
+```
+![](resources/img/WT&NM.JPG){width=400px}![](resources/img/IMG_4682.JPG){width=400px}
+
+**Selfie with a White teatfish, _Holothuria fuscogilva_**
+
+![](resources/img/tidyverse.png){width=80px}
+**Plots from R**
+
+Initial data anlayses for some high and medium value commercial species looked at length frequency profiles (Figure\@ref(fig:plot2)) as well as average density estimates across survey years (Figure\@ref(fig:standard-plot)). 
+
+```{r plot2, out.width='50%', fig.align='center', fig.height= 4, fig.width=6, fig.cap="Length frequency distribution for Black teatfish _Holothuria whitmaei_, over survey years.", fig.show='hold',echo=FALSE}
+
+bdm_lf <- read_csv("data/bdm_length_frequency.csv") 
+
+bdm_whit <- bdm_lf %>% 
+  filter(species == "Holothuria whitmaei")
+
+bdm_whit %>% 
+  ggplot(aes(x = length)) +
+  geom_histogram(binwidth = 10)+
+  facet_wrap(~year)+
+  labs(y= "Count", x = "Total length (mm)")
+
+bdm_whit$year <- as.character(bdm_whit$year)
+
+bdm_whit %>% 
+  ggplot(aes(x = length, group = year, fill = year)) +
+  geom_histogram(aes(y = stat(count) / sum(count) * 100), 
+                 bins = 45, position = "dodge", binwidth = 10) +
+  labs(x= "Total length (mm)", y= "Percentage frequency", fill = "Survey year")
+```
+
+
+```{r eval=TRUE, echo=FALSE}
+#holothuria_whitmaei
+bdm_whitmaei <- bdm_density %>% 
+  select('holothuria_whitmaei', 'zone', 'samocc', 'strata')
+
+whit_all_strata <- filter(bdm_whitmaei, zone == "Barrier" | zone == "Great North East Channel" | zone == "Don Cay"| zone == "Cumberland" | zone == "Darnley" | zone == "Seven Reefs") 
+
+whit_no_deep <- filter(whit_all_strata, strata == "Reef top buffer (200 m)" | strata == "Reef top" | strata == "Reef edge")
+
+zone_names <- as_labeller(c("Barrier" = "Barrier", "Cumberland" = "Cumberland", "Darnley" = "Darnely", "Don Cay" = "Don Cay", "Great North East Channel" = "Great NE Channel", "Seven Reefs" = "Seven Reefs"))
+
+#stichopus_herrmanni
+
+bdm_herrmanni <- bdm_density %>% 
+  select('stichopus_herrmanni', 'zone', 'samocc', 'strata')
+
+herm_all_strata <- filter(bdm_herrmanni, zone == "Barrier" | zone == "Great North East Channel" | zone == "Don Cay"| zone == "Cumberland" | zone == "Darnley" | zone == "Seven Reefs") 
+
+herm_no_deep <- filter(herm_all_strata, strata == "Reef top buffer (200 m)" | strata == "Reef top" | strata == "Reef edge")
+
+zone_names <- as_labeller(c("Barrier" = "Barrier", "Cumberland" = "Cumberland", "Darnley" = "Darnely", "Don Cay" = "Don Cay", "Great North East Channel" = "Great NE Channel", "Seven Reefs" = "Seven Reefs"))
+
+#holothuria_ananas
+
+bdm_ananas <- bdm_density %>% 
+  select('holothuria_ananas', 'zone', 'samocc', 'strata')
+
+ananas_all_strata <- filter(bdm_ananas, zone == "Barrier" | zone == "Great North East Channel" | zone == "Don Cay"| zone == "Cumberland" | zone == "Darnley" | zone == "Seven Reefs") 
+
+ananas_no_deep <- filter(ananas_all_strata, strata == "Reef top buffer (200 m)" | strata == "Reef top" | strata == "Reef edge")
+
+zone_names <- as_labeller(c("Barrier" = "Barrier", "Cumberland" = "Cumberland", "Darnley" = "Darnely", "Don Cay" = "Don Cay", "Great North East Channel" = "Great NE Channel", "Seven Reefs" = "Seven Reefs"))
+
+#holothuria_fuscogilva
+
+bdm_fusco <- bdm_density %>% 
+  select('holothuria_fuscogilva', 'zone', 'samocc', 'strata')
+
+fusco_all_strata <- filter(bdm_fusco, zone == "Barrier" | zone == "Great North East Channel" | zone == "Don Cay"| zone == "Cumberland" | zone == "Darnley" | zone == "Seven Reefs") 
+
+fusco_no_deep <- filter(fusco_all_strata, strata == "Reef top buffer (200 m)" | strata == "Reef top" | strata == "Reef edge") 
+
+zone_names <- as_labeller(c("Barrier" = "Barrier", "Cumberland" = "Cumberland", "Darnley" = "Darnely", "Don Cay" = "Don Cay", "Great North East Channel" = "Great NE Channel", "Seven Reefs" = "Seven Reefs"))
+```
+
+
+```{r eval=TRUE, results='hide', echo=FALSE}
+
+plot_fuscog <- ggplot(fusco_no_deep, aes(y= holothuria_fuscogilva, x = samocc, colour = strata)) +
+    geom_point() +
+    geom_line() +
+    facet_wrap(~ zone, labeller = zone_names) +
+    labs(y= "Holothuria fuscogilva", x = "Survey year", colour = "Strata:") +
+    geom_smooth(se = FALSE, colour = "black") +
+    scale_x_continuous(breaks = c(1995, 2002, 2005, 2009, 2019)) +
+    theme(axis.text.x=element_blank(),
+          axis.title.y = element_text(face = "italic"),
+          axis.title.x = element_blank(),
+          strip.text = element_text(face = "bold"),
+          legend.key=element_blank())
+  
+  plot_whit <- ggplot(whit_no_deep, aes(y= holothuria_whitmaei, x = samocc, colour = strata)) +
+    geom_point() +
+    geom_line() +
+    facet_wrap(~ zone, labeller = zone_names) +
+    labs(y= "Holothuria whitamaei", x = "Survey year", colour = "Strata:") +
+    geom_smooth(se = FALSE, colour = "black") +
+    scale_x_continuous(breaks = c(1995, 2002, 2005, 2009, 2019)) +
+    theme(axis.text.x=element_blank(),
+          axis.title.y = element_text(face = "italic"),
+          axis.title.x = element_blank(),
+          strip.text = element_text(face = "bold"),
+          legend.key=element_blank())
+  
+  plot_herm <- ggplot(herm_no_deep, aes(y= stichopus_herrmanni, x = samocc, colour = strata)) +
+    geom_point() +
+    geom_line() +
+    facet_wrap(~ zone, labeller = zone_names) +
+    labs(y= "Stichopus herrmannii", x = "Survey year", colour = "Strata:") +
+    geom_smooth(se = FALSE, colour = "black") +
+    scale_x_continuous(breaks = c(1995, 2002, 2005, 2009, 2019)) +
+    theme(axis.text.x=element_text(angle=50, hjust=1),
+          axis.title.y = element_text(face = "italic"),
+          strip.text = element_text(face = "bold"),
+          legend.key=element_blank())
+  
+  plot_anan <- ggplot(ananas_no_deep, aes(y= holothuria_ananas, x = samocc, colour = strata)) +
+    geom_point() +
+    geom_line () +
+    facet_wrap(~ zone, labeller = zone_names) +
+    labs(y= "Thelenota ananas", x = "Survey year", colour = "Strata:") +
+    geom_smooth(se = FALSE, colour = "black") +
+    scale_x_continuous(breaks = c(1995, 2002, 2005, 2009, 2019)) +
+    theme(axis.text.x=element_text(angle=50,hjust=1),
+          axis.title.y = element_text(face = "italic"),
+          strip.text = element_text(face = "bold"),
+          legend.key=element_blank())
+```
+
+<span style="color:green">**When less is definitely more, but it was cool to see what outputs can be produced.** </span> 
+
+```{r standard-plot, out.width='100%', fig.align='center', fig.height= 8, fig.width=10, fig.cap="A = White teatfish, _Holothuria fuscogilva_ B = Black teatfish, _H. whitmaei_ C = Curryfish, _Stichopus herrmanni_ D = Prickly redfish, _Thelenota ananas_", echo=FALSE}
+
+
+ggarrange(plot_fuscog, plot_whit, plot_herm, plot_anan,
+          labels = c("A" , "B", "C", "D", element_text(size = 8)),
+          ncol = 2, nrow = 2,
+          common.legend = TRUE, legend = "bottom") +
+          labs(title = "Average density of sea cucumber species in Torres Strait zones\nby habitat strata, across survey years") +
+          theme(plot.title = element_text(size = 15, face = "bold",
+                margin = margin(10, 0, 10, 0)),
+                axis.title.x = element_text(vjust = -0.35),
+                axis.title.y = element_text(vjust = 0.35),
+                plot.background=element_rect(fill="lightblue"),
+                plot.margin = unit(c(0.5, 0.5, 0.5, 0.5), "cm")) #top, right, bottom, left
+
+```
+
+# My Digital Toolbox
+
+* R - dplyr, ggplot, ggpubr
+
+## Favourite tools 
+
+![](resources/img/google.png){width=100px}![](resources/img/stack.png){width=100px}![](https://raw.githubusercontent.com/tidyverse/ggplot2/master/man/figures/logo.png){width=80px}
+
+# My time went ...
+
+It was a rollercoaster! I appreciate the fact that you can type anything into google and guaranteed someone has already aksed the question and there are answers, especially stack overflow. The R community are altruistic. 
+
+# Next steps
+
+I plant to use ggplot to plot Catch Per Unit Effort data and will look at writing functions to capture other analyses currently run in Excel. I will also be trying _modelr_ for looking at stock trends for species.
+
+# My Data School Experience
+
+In addition to building on outputs from data school for my current sea cucumber project, I have already used R *for real* on other project work. A figure for a report needed updating with recent data, however the scientist that produced the plot previously has now retired. I was able to write the script needed and produced the exact plot, this has now been included in the technical report for a project milestone. 
+
+<span style="color:red">Do it! One day it just clicks and it's kind of awesome, so don't give up.</span> 
+
+![](resources/img/logo.png){.pull-right width=80px}
+
+**Acknowlegement**
+Thanks to Stephen Pearce, Kerensa McElroy and Kristian Goodacre - as well as all the guest teachers and tutuors!
+
+
+
+
