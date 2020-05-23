@@ -1,7 +1,7 @@
 ---
 title: Sustainable livelihoods in Torres Strait
 subtitle: The importance of sea cucumber fishing
-short_title: Beche-de-mer stock survey 2019/20
+short_title: 
 
 author:  Nicole Murphy
 affiliation: Oceans and Atmosphere # Or group/team
@@ -27,24 +27,22 @@ library("ggpubr")
 ```
 # Introduction
 
-Most of my work is in Torres Strait in collaboration with Traditional Owners, with a focus on stock assessment and harvest strategies for their hand collectable fisheries. I have spent a lot of time underwater collecting data and am now more involved on the other "dark" side, with analyses and data outputs. I *never* used code before data school. 
+Most of my work is in Torres Strait in collaboration with Traditional Owners, with a focus on stock assessment and harvest strategies for their hand collectable fisheries. I have spent a lot of time underwater collecting data and I now spend a lot of time with data outputs and analyses. I *never* used code before data school. 
 
 # My Project
 
-The Torres Strait 'Beche-de-mer (sea cucumber) Fishery (TSBDM) has become an important source of income for Torres Strait islanders since the early 1990s. While most beche-de-mer species stocks are in good numbers, several species are closed to fishing, or recovering from fishing pressure such as Sandfish, Black teatfish and Surf redfish. This has led to increased fishing pressure on other species, including the Prickly redfish and Curryfish. 
-
-Fishery dependent data (logbooks) were introduced to the TSBDMF in December 2017. However, there is considerable uncertainty about the status of many beche-de-mer populations. A stock survey is at present, still the only way to find out the status of fished beche-de-mer populations in Torres Strait. Previous stock surveys have been undertaken in 1995, 2002, 2005 and 2009. The most recent survey was undertaken in 2019/20.
+The Torres Strait 'Beche-de-mer' (sea cucumber) Fishery (TSBDM) has become an important source of income for Torres Strait islanders since the early 1990s. While most beche-de-mer stocks are in good numbers, several species are closed to fishing, or recovering from fishing pressure. This has led to increased fishing pressure on other species in the fishery. A stock survey is at present, the only way to find out the status of fished sea cucumber populations in Torres Strait. Previous stock surveys have been undertaken in 1995, 2002, 2005 and 2009, with the most recent surveys undertaken in Novemeber 2019 and January 2020.
 
 *Thank you to Torres Strait Islander fishery representatives, and to all Torres Strait Islanders for regularly hosting us on their land and supporting this research.*
 
 ## My goals
 
-Data exists for the TSBDMF from field surveys undertaken in 1995, 2002, 2005, 2009 and now 2019/20. Previously excel has been used for anlayses for stratitfied mean comparisons and stock estimates of species abundance. My goal is to work up the 2019/20 data set and build on previous analyses using R for fishery statistics of CPUE, as well as modelling to look at stock trends. 
+Previously excel has been used for anlayses for stratitfied mean comparisons and stock estimates of sea cucumber abundance. My initial goal was to work up the 2019/20 data set and combine with previous survey data, to produce some length frequency plots, which I did - nice one! I then moved onto looking at average density estimates, over survey years for sea cucumber species.
 
 **Stock survey**
 
-SCUBA divers surveyed transects for sea cucumbers species in November 2019 and January 2020. Sea cucumbers were recorded and processed, along with a number of environmental indicators and habitat measurement (Table\@ref(tab:mytable)).
-
+<img src="resources/img/sunset.JPG" align = "right"alt="Image" height="300" width="300"> <div style="text-align: left"> SCUBA divers surveyed transects for sea cucumbers species. Sea cucumbers were recorded and processed, along with a number of environmental indicators and habitat measurements (Table\@ref(tab:mytable)).
+<br><br><br>
 ```{r mytable, out.width='50%', echo = F}
 
 bdm_density <- read_csv("data/bdm_density_average_sea cucumber_edit.csv")
@@ -56,6 +54,7 @@ knitr::kable(head(bdm_rmark, n = 5), format = "html", caption = "Field data") %>
   kable_styling("striped", "condensed", full_width = F, position = "left", font_size = 8)
 
 ```
+
 ![](resources/img/WT&NM.JPG){width=400px}![](resources/img/IMG_4682.JPG){width=400px}
 
 **Selfie with a White teatfish, _Holothuria fuscogilva_**
@@ -63,7 +62,7 @@ knitr::kable(head(bdm_rmark, n = 5), format = "html", caption = "Field data") %>
 ![](resources/img/tidyverse.png){width=80px}
 **Plots from R**
 
-Initial data anlayses for some high and medium value commercial species looked at length frequency profiles (Figure\@ref(fig:plot2)) as well as average density estimates across survey years (Figure\@ref(fig:standard-plot)). 
+Initial data anlayses for some of the high and medium value commercial species looked at length frequency profiles (Figure\@ref(fig:plot2)), as well as average density estimates across survey years (Figure\@ref(fig:standard-plot)). 
 
 ```{r plot2, out.width='50%', fig.align='center', fig.height= 4, fig.width=6, fig.cap="Length frequency distribution for Black teatfish _Holothuria whitmaei_, over survey years.", fig.show='hold',echo=FALSE}
 
@@ -186,9 +185,8 @@ plot_fuscog <- ggplot(fusco_no_deep, aes(y= holothuria_fuscogilva, x = samocc, c
           strip.text = element_text(face = "bold"),
           legend.key=element_blank())
 ```
-
+<br>
 <span style="color:green">**When less is definitely more, but it was cool to see what outputs can be produced.** </span> 
-
 ```{r standard-plot, out.width='100%', fig.align='center', fig.height= 8, fig.width=10, fig.cap="A = White teatfish, _Holothuria fuscogilva_ B = Black teatfish, _H. whitmaei_ C = Curryfish, _Stichopus herrmanni_ D = Prickly redfish, _Thelenota ananas_", echo=FALSE}
 
 
@@ -206,33 +204,28 @@ ggarrange(plot_fuscog, plot_whit, plot_herm, plot_anan,
 
 ```
 
-# My Digital Toolbox
-
-* R - dplyr, ggplot, ggpubr
-
 ## Favourite tools 
 
-![](resources/img/google.png){width=100px}![](resources/img/stack.png){width=100px}![](https://raw.githubusercontent.com/tidyverse/ggplot2/master/man/figures/logo.png){width=80px}
+![](resources/img/google.png){width=100px}&nbsp;&nbsp;&nbsp;&nbsp;![](resources/img/stack.png){width=100px}&nbsp;&nbsp;&nbsp;&nbsp;![](https://raw.githubusercontent.com/tidyverse/ggplot2/master/man/figures/logo.png){width=80px}
 
 # My time went ...
 
-It was a rollercoaster! I appreciate the fact that you can type anything into google and guaranteed someone has already aksed the question and there are answers, especially stack overflow. The R community are altruistic. 
+<img src="resources/img/rollcoast.png" align = "left"alt="Image" height="100" width="100"><br> <div style="text-align: left"> &nbsp;&nbsp; It was a rollercoaster! I appreciate the fact that you can type anything into google and guaranteed someone has already aksed <br/>&nbsp;&nbsp;&nbsp;the question and there are answers, especially stack overflow.The R community are rockstars.</div>                   
+
+<br><br>
 
 # Next steps
 
-I plant to use ggplot to plot Catch Per Unit Effort data and will look at writing functions to capture other analyses currently run in Excel. I will also be trying _modelr_ for looking at stock trends for species.
+I plan to use ggplot to plot Catch Per Unit Effort data and will look at writing functions to capture other analyses currently run in Excel. I will also be trying _modelr_ for looking at modelling stock trends for species.
 
 # My Data School Experience
 
-In addition to building on outputs from data school for my current sea cucumber project, I have already used R *for real* on other project work. A figure for a report needed updating with recent data, however the scientist that produced the plot previously has now retired. I was able to write the script needed and produced the exact plot, this has now been included in the technical report for a project milestone. 
+In addition to building on outputs from data school for my current sea cucumber project, I have already used R *for real* on other project work. A figure for a report needed updating with recent data, however the scientist that produced the plot has now retired. I was able to write the script and generate the exact plot, this has now been included in the technical report for the project milestone. 
 
-<span style="color:red">Do it! One day it just clicks and it's kind of awesome, so don't give up.</span> 
-
-![](resources/img/logo.png){.pull-right width=80px}
-
-**Acknowlegement**
-Thanks to Stephen Pearce, Kerensa McElroy and Kristian Goodacre - as well as all the guest teachers and tutuors!
-
-
-
+<span style="color:red">One day it just clicks and it's kind of awesome.</span> 
+<br>
+<img src="resources/img/logo.png"align = "right"alt="Image" height="70" width="70"><br><br>**Acknowlegement:**
+Thanks to Stephen Pearce, Kerensa McElroy and Kristian Goodacre, as well as all the guest teachers and tutors, also rockstars! &nbsp;&nbsp;&nbsp;
+<br><br>
+    
 
