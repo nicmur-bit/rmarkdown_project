@@ -33,15 +33,15 @@ Most of my work is in Torres Strait in collaboration with Traditional Owners, wi
 
 The Torres Strait 'Beche-de-mer' (sea cucumber) Fishery (TSBDM) has become an important source of income for Torres Strait islanders since the early 1990s. While most beche-de-mer stocks are in good numbers, several species are closed to fishing, or recovering from fishing pressure. This has led to increased fishing pressure on other species in the fishery. A stock survey is at present, the only way to find out the status of fished sea cucumber populations in Torres Strait. Previous stock surveys have been undertaken in 1995, 2002, 2005 and 2009, with the most recent surveys undertaken in Novemeber 2019 and January 2020.
 
-*Thank you to Torres Strait Islander fishery representatives, and to all Torres Strait Islanders for regularly hosting us on their land and supporting this research.*
+*Thank you to Torres Strait fishery representatives and Traditional Owners, for regularly hosting us on their land and supporting this research.*
 
 ## My goals
 
-Previously excel has been used for anlayses for stratitfied mean comparisons and stock estimates of sea cucumber abundance. My initial goal was to work up the 2019/20 data set and combine with previous survey data, to produce some length frequency plots, which I did - nice one! I then moved onto looking at average density estimates, over survey years for sea cucumber species.
+Previously Excel has been used for anlayses for stratitfied mean comparisons and stock estimates of sea cucumber abundance. My initial goal was to work up the 2019/20 data set and combine with previous survey data, to produce some length frequency plots, which I did - nice one! I then moved onto looking at average density estimates, over survey years for sea cucumber species.
 
 **Stock survey**
 
-<img src="resources/img/sunset.JPG" align = "right"alt="Image" height="300" width="300"> <div style="text-align: left"> SCUBA divers surveyed transects for sea cucumbers species. Sea cucumbers were recorded and processed, along with a number of environmental indicators and habitat measurements (Table\@ref(tab:mytable)).
+<img src="resources/img/sunset.JPG" align = "right"alt="Image" height="300" width="300"> <div style="text-align: left"> SCUBA divers surveyed reef top, reef top buffer and reef edge transects for sea cucumbers species. Sea cucumbers were processed and recorded, along with a number of environmental indicators and habitat measurements (Table\@ref(tab:mytable)).
 <br><br><br>
 ```{r mytable, out.width='50%', echo = F}
 
@@ -62,7 +62,7 @@ knitr::kable(head(bdm_rmark, n = 5), format = "html", caption = "Field data") %>
 ![](resources/img/tidyverse.png){width=80px}
 **Plots from R**
 
-Initial data anlayses for some of the high and medium value commercial species looked at length frequency profiles (Figure\@ref(fig:plot2)), as well as average density estimates across survey years (Figure\@ref(fig:standard-plot)). 
+Initial data anlayses for some of the high and medium value commercial sea cucumber species looked at length frequency profiles (Figure\@ref(fig:plot2)), as well as average density estimates across survey years (Figure\@ref(fig:standard-plot)). 
 
 ```{r plot2, out.width='50%', fig.align='center', fig.height= 4, fig.width=6, fig.cap="Length frequency distribution for Black teatfish _Holothuria whitmaei_, over survey years.", fig.show='hold',echo=FALSE}
 
@@ -210,13 +210,13 @@ ggarrange(plot_fuscog, plot_whit, plot_herm, plot_anan,
 
 # My time went ...
 
-<img src="resources/img/rollcoast.png" align = "left"alt="Image" height="100" width="100"><br> <div style="text-align: left"> &nbsp;&nbsp; It was a rollercoaster! I appreciate the fact that you can type anything into google and guaranteed someone has already aksed <br/>&nbsp;&nbsp;&nbsp;the question and there are answers, especially stack overflow.The R community are rockstars.</div>                   
+<img src="resources/img/rollcoast.png" align = "left"alt="Image" height="100" width="100"><br> <div style="text-align: left"> &nbsp;&nbsp; It was a rollercoaster! I appreciate the fact that you can type anything into google and guaranteed someone has already aksed <br/>&nbsp;&nbsp;&nbsp;the question and there are answers, especially stack overflow. The R community are rockstars.</div>                   
 
 <br><br>
 
 # Next steps
 
-I plan to use ggplot to plot Catch Per Unit Effort data and will look at writing functions to capture other analyses currently run in Excel. I will also be trying _modelr_ for looking at modelling stock trends for species.
+I plan to use ggplot to plot current Catch Per Unit Effort data for the TSBDM fishery and will look at writing functions to capture other analyses currently run in Excel. I will also be trying out _modelr_ (and other options) for looking at modelling stock trends for sea cucumber species.
 
 # My Data School Experience
 
@@ -228,4 +228,3 @@ In addition to building on outputs from data school for my current sea cucumber 
 Thanks to Stephen Pearce, Kerensa McElroy and Kristian Goodacre, as well as all the guest teachers and tutors, also rockstars! &nbsp;&nbsp;&nbsp;
 <br><br>
     
-
