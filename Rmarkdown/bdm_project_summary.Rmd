@@ -41,7 +41,7 @@ Previously Excel has been used for anlayses for stratitfied mean comparisons and
 
 **Stock survey**
 
-<img src="resources/img/sunset.JPG" align = "right"alt="Image" height="300" width="300"> <div style="text-align: left"> SCUBA divers surveyed reef top, reef top buffer and reef edge transects for sea cucumbers species. Sea cucumbers were processed and recorded, along with a number of environmental indicators and habitat measurements (Table\@ref(tab:mytable)).
+<img src="resources/img/sunset.JPG" align = "right"alt="Image" height="300" width="300"> <div style="text-align: left"> SCUBA divers surveyed reef top, reef top buffer and reef edge transects for sea cucumbers species. Sea cucumbers were processed and data recorded, along with a number of environmental indicators and habitat measurements (Table\@ref(tab:mytable)).
 <br><br><br>
 ```{r mytable, out.width='50%', echo = F}
 
