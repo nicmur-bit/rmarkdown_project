@@ -220,7 +220,7 @@ I plan to use ggplot to plot current Catch Per Unit Effort data for the TSBDM fi
 
 # My Data School Experience
 
-In addition to building on outputs from data school for my current sea cucumber project, I have already used R *for real* on other project work. A figure for a report needed updating with recent data, however the scientist that produced the plot has now retired. I was able to write the script and generate the exact plot, this has now been included in the technical report for the project milestone. 
+In addition to building on outputs from data school for my current sea cucumber project, I have already used R *for real* on other project work. A figure for a report needed updating with recent data, however the scientist that produced the plot has retired. I was able to write the script and generate the exact plot, this has now been included in the technical report for the project milestone. 
 
 <span style="color:red">One day it just clicks and it's kind of awesome.</span> 
 <br>
